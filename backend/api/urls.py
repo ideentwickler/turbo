@@ -5,9 +5,11 @@ from rest_framework import routers
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from .api import UserViewSet
+from apps.menus.views import MenuViewSet
 
 router = routers.DefaultRouter()
 router.register("users", UserViewSet, basename="api-users")
+router.register("menus", MenuViewSet, basename="api-menus")
 
 urlpatterns = [
     path(

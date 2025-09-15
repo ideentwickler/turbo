@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "rest_framework_simplejwt",
     "drf_spectacular",
     "api",
+    "apps.menus",
 ]
 
 ######################################################################
@@ -163,6 +164,16 @@ UNFOLD = {
                         "title": _("Groups"),
                         "icon": "label",
                         "link": reverse_lazy("admin:auth_group_changelist"),
+                    },
+                    {
+                        "title": _("Menus"),
+                        "icon": "menu",
+                        "link": reverse_lazy("admin:menus_menu_changelist"),
+                    },
+                    {
+                        "title": _("Categories"),
+                        "icon": "category",
+                        "link": reverse_lazy("admin:menus_category_changelist"),
                     },
                 ],
             },

@@ -11,7 +11,7 @@ services:
       POSTGRES_PASSWORD: "change-password"
       POSTGRES_DB: "db"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
       interval: 2s
       timeout: 2s
       retries: 10
@@ -19,6 +19,16 @@ services:
     command: bash -c "uv sync && uv run -- python manage.py migrate && uv run -- python manage.py runserver 0.0.0.0:8000"
     build:
       context: backend
+    develop:
+      watch:
+        - action: sync
+          path: ./backend
+          target: /app
+          ignore:
+            - .git
+            - .venv/
+        - action: rebuild
+          path: ./backend/pyproject.toml
     expose:
       - "8000"
     ports:
@@ -34,6 +44,16 @@ services:
     command: bash -c "pnpm install -r && pnpm --filter web dev"
     build:
       context: frontend
+    develop:
+      watch:
+        - action: sync
+          path: ./frontend
+          target: /app
+          ignore:
+            - .git
+            - .node_modules/
+        - action: rebuild
+          path: ./frontend/package.json
     volumes:
       - ./frontend:/app
     expose:

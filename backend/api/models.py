@@ -3,10 +3,15 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 
-class User(AbstractUser):
+class BaseModel(models.Model):
     created_at = models.DateTimeField(_("created at"), auto_now_add=True)
     modified_at = models.DateTimeField(_("modified at"), auto_now=True)
 
+    class Meta:
+        abstract = True
+
+
+class User(AbstractUser, BaseModel):
     class Meta:
         db_table = "users"
         verbose_name = _("user")
@@ -14,3 +19,5 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.email if self.email else self.username
+
+

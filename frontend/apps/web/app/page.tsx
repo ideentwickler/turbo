@@ -1,7 +1,15 @@
 import { PagesOverview } from '@/components/pages-overview'
 import { UserSession } from '@/components/user-session'
+import { getServerSession } from 'next-auth'
+import { redirect } from 'next/navigation'
+import { authOptions } from '@/lib/auth'
 
-export default function Home() {
+export default async function Home() {
+  const session = await getServerSession(authOptions)
+  if (session === null) {
+    return redirect('/login')
+  }
+
   return (
     <>
       <h1 className="text-xl font-semibold tracking-tight text-gray-900">
